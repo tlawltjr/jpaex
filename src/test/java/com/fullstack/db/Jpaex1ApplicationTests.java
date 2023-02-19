@@ -1,5 +1,6 @@
 package com.fullstack.db;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.fullstack.db.entity.Memo;
 import com.fullstack.db.repository.MemoRepository1;
@@ -78,12 +80,12 @@ class Jpaex1ApplicationTests {
 //		memorepository.deleteAll();
 //	}
 	
-	@Test
-	public void updateTest() {
-		//수정할 Entity의 내용을 변경해 볼게요
-		Memo memo = Memo.builder().mno(301L).memoTxt("이건 수정된 내용입니다").build();
-		System.out.println(memorepository.save(memo));
-	}
+//	@Test
+//	public void updateTest() {
+//		//수정할 Entity의 내용을 변경해 볼게요
+//		Memo memo = Memo.builder().mno(301L).memoTxt("이건 수정된 내용입니다").build();
+//		System.out.println(memorepository.save(memo));
+//	}
 	
 	/*
 	 * Pageable 인터페이스 : 페이징 관리를 하는 중심 인터페이스
@@ -93,24 +95,55 @@ class Jpaex1ApplicationTests {
 	 * 
 	 */
 	//페이징을 위한 테스트 메서드 정의
-	@Test
-	public void testPaging1() {
-		Pageable pageable = PageRequest.of(0, 10);
-		Page<Memo> result = memorepository.findAll(pageable);
+//	@Test
+//	public void testPaging1() {
+//		Pageable pageable = PageRequest.of(0, 10);
+//		Page<Memo> result = memorepository.findAll(pageable);
+//		
+//		System.out.println(result);
 		
-		System.out.println(result);
+//		System.out.println("++++++++++++++++++++++++++++++");
+//		System.out.println("getTotalPages : "+result.getTotalPages());
+//		System.out.println("getNumber : "+result.getNumber());
+//		System.out.println("getelements : "+result.getNumberOfElements());
+//		System.out.println("size : "+result.getSize());
+//		System.out.println(result.getTotalElements());
+//		System.out.println(result.hasNext());
+//		System.out.println(result.hasPrevious());
+//		System.out.println(result.isEmpty());
 		
-		System.out.println("++++++++++++++++++++++++++++++");
-		System.out.println("getTotalPages : "+result.getTotalPages());
-		System.out.println("getNumber : "+result.getNumber());
-		System.out.println("getelements : "+result.getNumberOfElements());
-		System.out.println("size : "+result.getSize());
-		System.out.println(result.getTotalElements());
-		System.out.println(result.hasNext());
-		System.out.println(result.hasPrevious());
-		System.out.println(result.isEmpty());
-	}
+		//Sort객체를 얻어낼떄 정렬될 키의 값을 주고, 정렬메서드를 통해 
+		//정렬된 Sort객체를 얻어낼 수 있습니다
+//		Sort s1 = Sort.by("mno").ascending();
+//		Sort s2 = Sort.by("memoTxt").descending();
+//		Sort s3 = s1.and(s2);
+//		
+//		//방법 1.memorepository.findAll()
+//		pageable = PageRequest.of(0, 10, s3);
+//		result = memorepository.findAll(pageable);
+//		
+//		//foreach 구문을 이용해서 위 result의 값을 출력해보세요
+//		
+//		result.get().forEach(memo ->{
+//			System.out.println("======="+memo);
+//		});
+//		
+//	}
 	
+//	@Test
+//	public void testQueryMethod() {
+//		
+//		List<Memo> list = memorepository.findByMnoBetweenOrderByMnoDesc(201L, 300L);
+//		System.out.println("=========="+list);
+//	}
+	
+	@Test
+	public void testQueryMethod() {
+		
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
+		Page<Memo> page = memorepository.findByMnoBetween(201L, 301L, pageable);
+		System.out.println("=========="+page);
+	}
 	
 	
 	
