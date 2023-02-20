@@ -34,7 +34,7 @@ class Jpaex1ApplicationTests {
 //	void contextLoads() {
 //		IntStream.rangeClosed(1, 100).forEach(i->{
 //			Memo memo = Memo.builder().memoTxt("이건 JPA 엔티티가 넣은 데이터"+i).build();
-//			memorepository.save(memo);
+//			memorepository.save(memo);//insert 메서드
 //			
 //		});
 //		
